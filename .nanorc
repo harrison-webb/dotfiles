@@ -1,0 +1,23 @@
+set tabsize 4
+set autoindent
+set trimblanks
+set matchbrackets "(<[{)>]}"
+set linenumbers
+set constantshow
+set keycolor cyan
+set functioncolor cyan
+set numbercolor white
+set mouse
+include ~/.nano/nanorc/sh.nanorc
+include ~/.nano/nanorc/python.nanorc
+include ~/.nano/nanorc/markdown.nanorc
+include ~/.nano/nanorc/javascript.nanorc
+include ~/.nano/nanorc/c.nanorc
+include ~/.nano/nanorc/json.nanorc
+include ~/.nano/nanorc/zsh.nanorc
+include ~/.nano/nanorc/rust.nanorc
+include ~/.nano/nanorc/nanorc.nanorc
+include ~/.nano/nanorc/toml.nanorc
+include ~/.nano/nanorc/xml.nanorc
+include ~/.nano/nanorc/zshrc.nanorc
+include ~/.nano/nanorc/swift.nanorc
