@@ -1,0 +1,45 @@
+// Place your key bindings in this file to override the defaults
+[
+    // cycle through autosuggest options with tab or shift+tab
+    {
+        "key": "tab",
+        "command": "selectNextQuickFix",
+        "when": "editorFocus && quickFixWidgetVisible"
+    },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevQuickFix",
+        "when": "editorFocus && quickFixWidgetVisible"
+    },
+    {
+        "key": "tab",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
+        "key": "shift+tab",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    // expand folders + open files with enter for vim filetree navigation, instead of enter renaming
+    {
+        "key": "cmd+enter",
+        "command": "renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus"
+    },
+    {
+        "key": "enter",
+        "command": "-renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus"
+    },
+    {
+        "key": "enter",
+        "command": "list.select",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "cmd+c",
+        "command": "-extension.vim_cmd+c",
+        "when": "editorTextFocus && vim.active && vim.overrideCopy && vim.use<D-c> && !inDebugRepl"
+    }
+]

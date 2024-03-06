@@ -1,0 +1,48 @@
+{
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    },
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "accessibility.signals.noInlayHints": {
+        "announcement": "off"
+    },
+    "breadcrumbs.enabled": false,
+    "catppuccin.italicKeywords": false,
+    "debug.allowBreakpointsEverywhere": true,
+    "debug.inlineValues": "on",
+    "editor.accessibilitySupport": "off",
+    "editor.cursorSurroundingLines": 3,
+    "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "editor.formatOnSave": true,
+    "editor.inlayHints.enabled": "onUnlessPressed",
+    "editor.inlineSuggest.showToolbar": "always",
+    "editor.minimap.enabled": false,
+    "editor.screenReaderAnnounceInlineSuggestion": false,
+    "editor.scrollbar.verticalScrollbarSize": 24,
+    "editor.suggest.showSnippets": true,
+    "git.openRepositoryInParentFolders": "never",
+    "python.analysis.typeCheckingMode": "basic",
+    "reactSnippets.settings.importReactOnTop": false,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "window.commandCenter": true,
+    "window.title": "${activeEditorLong}${separator}${dirty}",
+    "window.titleBarStyle": "custom",
+    "workbench.colorTheme": "Catppuccin Frappé"
+}
