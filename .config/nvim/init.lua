@@ -15,6 +15,10 @@ If you experience any errors while trying to install kickstart, run `:checkhealt
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Disable netrw to use nvim-tree instead
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 --  For more options, you can see `:help option-list`
@@ -66,6 +70,13 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+vim.keymap.set(
+	"n",
+	"<leader>t",
+	":NvimTreeToggle<Return>",
+	{ desc = "Open file [t]ree", noremap = true, silent = true, nowait = true }
+)
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
@@ -630,6 +641,34 @@ require("lazy").setup({
 
 	-- TIME TRACKING (WAKATIME)
 	{ "wakatime/vim-wakatime", lazy = false },
+
+	-- NVIM-TREE (FILETREE VIEWER)
+	{
+		"nvim-tree/nvim-tree.lua",
+		lazy = false,
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("nvim-tree").setup({
+				on_attach = function(bufnr)
+					local api = require("nvim-tree.api")
+
+					-- default mappings
+					api.config.mappings.default_on_attach(bufnr)
+
+					-- custom mappings
+				end,
+
+				actions = { open_file = { quit_on_open = true } },
+				filters = { dotfiles = true, custom = { "node_modules/.*" } },
+			})
+
+			if vim.fn.argc(-1) == 0 then
+				vim.cmd("NvimTreeFocus")
+			end
+		end,
+	},
 
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
