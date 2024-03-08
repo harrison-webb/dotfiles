@@ -71,12 +71,18 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+-- Open nvim-tree filetree
 vim.keymap.set(
 	"n",
 	"<leader>t",
 	":NvimTreeToggle<Return>",
 	{ desc = "Open file [t]ree", noremap = true, silent = true, nowait = true }
 )
+
+-- Toggle Trouble warnings/errors window
+vim.keymap.set("n", "<leader>xx", function()
+	require("trouble").toggle()
+end, { desc = "Toggle Trouble window" })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
@@ -701,6 +707,13 @@ require("lazy").setup({
 				vim.cmd("NvimTreeFocus")
 			end
 		end,
+	},
+
+	-- ERRORS AND WARNINGS WINDOW (TROUBLE)
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
 	},
 
 	{ -- Highlight, edit, and navigate code
