@@ -100,7 +100,7 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
--- [[ Basic Autocommands ]]
+-- [[ BASIC AUTOCOMMANDS ]]
 --  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
@@ -111,6 +111,16 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
+	end,
+})
+
+-- Disable auto comment on new line
+-- https://github.com/Alexis12119/nvim-config/blob/2b09930b5cac38ca88ee265c821cd2cad55fd1d4/lua/core/autocommands.lua
+vim.api.nvim_create_autocmd("BufEnter", {
+	desc = "Disable New Line Comment",
+	group = vim.api.nvim_create_augroup("General Settings", { clear = true }),
+	callback = function()
+		vim.opt.formatoptions:remove({ "c", "r", "o" })
 	end,
 })
 
