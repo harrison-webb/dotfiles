@@ -509,6 +509,19 @@ require("lazy").setup({
 		event = "InsertEnter",
 		dependencies = {
 			-- Snippet Engine & its associated nvim-cmp source
+			{
+				"L3MON4D3/LuaSnip",
+				build = (function()
+					-- Build Step is needed for regex support in snippets
+					-- This step is not supported in many windows environments
+					-- Remove the below condition to re-enable on windows
+					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+						return
+					end
+					return "make install_jsregexp"
+				end)(),
+			},
+			"saadparwaiz1/cmp_luasnip",
 			-- Adds other completion capabilities.
 			--  nvim-cmp does not ship with all sources by default. They are split
 			--  into multiple repos for maintenance purposes.
@@ -518,11 +531,13 @@ require("lazy").setup({
 		},
 		config = function() -- See `:help cmp`
 			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+			luasnip.config.setup({})
 
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						vim.fn["vsnip#anonymous"](args.body)
+						luasnip.lsp_expand(args.body)
 					end,
 				},
 				completion = { completeopt = "menu,menuone,noinsert" },
@@ -537,7 +552,8 @@ require("lazy").setup({
 					-- Accept ([y]es) the completion.
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					-- ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
@@ -545,7 +561,13 @@ require("lazy").setup({
 					["<C-Space>"] = cmp.mapping.complete({}),
 				}),
 				sources = {
-					{ name = "nvim_lsp" },
+					{
+						name = "nvim_lsp",
+						entry_filter = function(entry, ctx) -- https://github.com/hrsh7th/nvim-cmp/blob/04e0ca376d6abdbfc8b52180f8ea236cbfddf782/doc/cmp.txt#L647
+							return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "Text"
+						end,
+					},
+					{ name = "luasnip" },
 					{ name = "path" },
 				},
 				-- disable snippets within comments and strings
@@ -578,10 +600,11 @@ require("lazy").setup({
 		priority = 1000, -- make sure to load this before all the other start plugins
 		config = function()
 			require("kanagawa").setup({
+				compile = true,
 				keywordStyle = { italic = false },
 			})
 			-- Load the colorscheme here
-			vim.cmd.colorscheme("kanagawa")
+			vim.cmd("colorscheme kanagawa")
 
 			-- can configure highlights by doing something like vim.cmd.hi("Comment gui=none")
 		end,
