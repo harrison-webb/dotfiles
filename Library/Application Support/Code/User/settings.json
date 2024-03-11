@@ -44,5 +44,14 @@
     "window.commandCenter": true,
     "window.title": "${activeEditorLong}${separator}${dirty}",
     "window.titleBarStyle": "custom",
-    "workbench.colorTheme": "Catppuccin Frappé"
+    "workbench.colorTheme": "Kanagawa",
+    "editor.cursorBlinking": "solid",
+    "window.confirmBeforeClose": "always",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "workbench.colorCustomizations": {
+        "editorCursor.background": "#363646",
+    },
+    "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim-code/"
 }
