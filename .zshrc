@@ -8,8 +8,16 @@
 
 source $HOME/antigen.zsh
 
-# use the 'oh-my-zsh' library of plugins
-# antigen use oh-my-zsh
+
+# SSHing to MBP server
+source ~/.webbserver_config.sh
+
+webbserver() {
+	wakeonlan "$SERVER_MAC"
+	sleep 2
+	ssh harrison@"$SERVER_IP"
+}
+
 
 # load zsh-autosuggestions
 antigen bundle zsh-users/zsh-autosuggestions
