@@ -18,6 +18,11 @@ webbserver() {
 	ssh harrison@"$SERVER_IP"
 }
 
+# Open QT Creator
+qt() {
+	open /opt/Qt/Qt\ Creator.app
+
+}
 
 # load zsh-autosuggestions
 antigen bundle zsh-users/zsh-autosuggestions
