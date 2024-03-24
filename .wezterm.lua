@@ -5,6 +5,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- Apply config choices here
+config.check_for_updates = true
 
 -- Color scheme
 config.color_scheme = "Gruvbox dark, medium (base16)"
