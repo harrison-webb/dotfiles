@@ -21,6 +21,17 @@
         "command": "selectPrevSuggestion",
         "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
     },
+    // cycle through cmd+p file search menu with tab or shift+tab
+    {
+        "key": "tab",
+        "command": "workbench.action.quickOpenSelectNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "shift+tab",
+        "command": "workbench.action.quickOpenSelectPrevious",
+        "when": "inQuickOpen"
+    },
     // expand folders + open files with enter for vim filetree navigation, instead of enter renaming
     {
         "key": "cmd+enter",
@@ -42,6 +53,13 @@
         "command": "-extension.vim_cmd+c",
         "when": "editorTextFocus && vim.active && vim.overrideCopy && vim.use<D-c> && !inDebugRepl"
     },
+    // use cmd-n to make a new file in file explorer
+    {
+        "key": "cmd+n",
+        "command": "explorer.newFile",
+        "when": "explorerViewletFocus"
+    },
+    // Command instead of ctrl to select different tabs
     {
         "key": "cmd+1",
         "command": "workbench.action.openEditorAtIndex1"
