@@ -26,6 +26,9 @@ vim.g.loaded_netrwPlugin = 1
 -- Make line numbers default
 vim.opt.number = true
 
+-- Disable comments on newline
+vim.opt.formatoptions:remove({ "c", "r", "o" })
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
 
@@ -63,7 +66,7 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = false
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.o.scrolloff = 3
 
 -- Set tab to 4 spaces
 vim.opt.tabstop = 4
@@ -598,6 +601,10 @@ require("lazy").setup({
 					-- Select the [p]revious item
 					["<C-p>"] = cmp.mapping.select_prev_item(),
 
+					-- Scroll through intellisense documentation popup
+					["<C-d>"] = cmp.mapping.scroll_docs(4),
+					["<C-f>"] = cmp.mapping.scroll_docs(-4),
+
 					-- Accept ([y]es) the completion.
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
@@ -670,9 +677,12 @@ require("lazy").setup({
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
-		event = "VimEnter",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
+		config = function()
+			local todo_comments = require("todo-comments")
+			todo_comments.setup()
+		end,
 	},
 
 	{ -- Collection of various small independent plugins/modules
@@ -793,6 +803,13 @@ require("lazy").setup({
 			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 		end,
+	},
+
+	-- SCROLLOFF PAST END OF FILE
+	{
+		"Aasim-A/scrollEOF.nvim",
+		event = { "CursorMoved", "WinScrolled" },
+		opts = {},
 	},
 })
 
