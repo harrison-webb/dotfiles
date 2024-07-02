@@ -1,11 +1,9 @@
 --[[
   Next, run AND READ `:help`.
     MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-
   I have left several `:help X` comments throughout the init.lua
     These are hints about where to find more information about the relevant settings,
     plugins or neovim features used in kickstart.
-
 If you experience any errors while trying to install kickstart, run `:checkhealth` for more info
 --]]
 
@@ -22,7 +20,6 @@ vim.g.loaded_netrwPlugin = 1
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 --  For more options, you can see `:help option-list`
-
 -- Make line numbers default
 vim.opt.number = true
 
@@ -471,7 +468,16 @@ require("lazy").setup({
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				-- clangd = {},
-				gopls = {},
+				gopls = {
+					settings = {
+
+						gopls = {
+							analyses = {
+								fillstruct = true,
+							},
+						},
+					},
+				},
 				pyright = {},
 				rust_analyzer = {},
 				html = {},
@@ -558,7 +564,7 @@ require("lazy").setup({
 
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
 			-- Snippet Engine & its associated nvim-cmp source
 			{
@@ -580,6 +586,7 @@ require("lazy").setup({
 			"neovim/nvim-lspconfig",
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
 		},
 		config = function() -- See `:help cmp`
 			local cmp = require("cmp")
@@ -642,6 +649,11 @@ require("lazy").setup({
 						or context.in_syntax_group("Comment")
 					return not string_ctx and not comment_ctx
 				end,
+			})
+
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
 			})
 		end,
 	},
@@ -811,6 +823,9 @@ require("lazy").setup({
 		event = { "CursorMoved", "WinScrolled" },
 		opts = {},
 	},
+
+	-- cmp-cmdline, vim command completion/intellisense
+	{},
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
