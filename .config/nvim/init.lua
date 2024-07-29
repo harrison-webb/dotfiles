@@ -23,6 +23,9 @@ vim.g.loaded_netrwPlugin = 1
 -- Make line numbers default
 vim.opt.number = true
 
+-- colors
+vim.opt.termguicolors = true
+
 -- Disable comments on newline
 vim.opt.formatoptions:remove({ "c", "r", "o" })
 
@@ -61,6 +64,7 @@ vim.opt.inccommand = "split"
 
 -- Show which line your cursor is on
 vim.opt.cursorline = false
+vim.opt.cursorlineopt = "line"
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 3
@@ -83,11 +87,6 @@ vim.keymap.set(
 	":NvimTreeToggle<Return>",
 	{ desc = "Open file [t]ree", noremap = true, silent = true, nowait = true }
 )
-
--- Toggle Trouble warnings/errors window
-vim.keymap.set("n", "<leader>xx", function()
-	require("trouble").toggle()
-end, { desc = "Toggle Trouble window" })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
@@ -137,28 +136,28 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 -- Format go files and organize imports on save
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.go",
-	callback = function()
-		local params = vim.lsp.util.make_range_params()
-		params.context = { only = { "source.organizeImports" } }
-		-- buf_request_sync defaults to a 1000ms timeout. Depending on your
-		-- machine and codebase, you may want longer. Add an additional
-		-- argument after params if you find that you have to write the file
-		-- twice for changes to be saved.
-		-- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
-		local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-		for cid, res in pairs(result or {}) do
-			for _, r in pairs(res.result or {}) do
-				if r.edit then
-					local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-					vim.lsp.util.apply_workspace_edit(r.edit, enc)
-				end
-			end
-		end
-		vim.lsp.buf.format({ async = false })
-	end,
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+-- 	pattern = "*.go",
+-- 	callback = function()
+-- 		local params = vim.lsp.util.make_range_params()
+-- 		params.context = { only = { "source.organizeImports" } }
+-- 		-- buf_request_sync defaults to a 1000ms timeout. Depending on your
+-- 		-- machine and codebase, you may want longer. Add an additional
+-- 		-- argument after params if you find that you have to write the file
+-- 		-- twice for changes to be saved.
+-- 		-- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+-- 		local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+-- 		for cid, res in pairs(result or {}) do
+-- 			for _, r in pairs(res.result or {}) do
+-- 				if r.edit then
+-- 					local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+-- 					vim.lsp.util.apply_workspace_edit(r.edit, enc)
+-- 				end
+-- 			end
+-- 		end
+-- 		vim.lsp.buf.format({ async = false })
+-- 	end,
+-- })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -468,16 +467,7 @@ require("lazy").setup({
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				-- clangd = {},
-				gopls = {
-					settings = {
-
-						gopls = {
-							analyses = {
-								fillstruct = true,
-							},
-						},
-					},
-				},
+				gopls = {},
 				pyright = {},
 				rust_analyzer = {},
 				html = {},
@@ -558,6 +548,9 @@ require("lazy").setup({
 				python = { "isort", "black" },
 				-- You can use a sub-list to tell conform to run *until* a formatter is found
 				javascript = { { "prettierd", "prettier" } },
+				cpp = { "clang-format" },
+				c = { "clang-format" },
+				go = { "gofmt", "goimports" },
 			},
 		},
 	},
@@ -592,6 +585,28 @@ require("lazy").setup({
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			luasnip.config.setup({})
+
+			-- custom snippets
+			local fmta = require("luasnip.extras.fmt").fmta
+			local s = luasnip.snippet
+			local c = luasnip.choice_node
+			local i = luasnip.insert_node
+			local t = luasnip.text_node
+
+			luasnip.add_snippets("go", {
+				s(
+					"iferr",
+					fmta(
+						[[
+if err != nil {
+  <return_node>
+}
+<finish>
+]],
+						{ return_node = i(1, "return err"), finish = i(0) }
+					)
+				),
+			})
 
 			cmp.setup({
 				snippet = {
@@ -668,7 +683,8 @@ require("lazy").setup({
 		end,
 	},
 
-	-- THEME/COLORSCHEME
+	-- THEME/COLORSCHEMES ------------------------------------------------------------------
+	-- kanagawa
 	{
 		-- `:Telescope colorscheme` to list all preinstalled colorschemes
 		"rebelot/kanagawa.nvim",
@@ -678,6 +694,7 @@ require("lazy").setup({
 			require("kanagawa").setup({
 				compile = true,
 				keywordStyle = { italic = false },
+				typeStyle = { bold = true },
 			})
 			-- Load the colorscheme here
 			vim.cmd("colorscheme kanagawa")
@@ -685,6 +702,25 @@ require("lazy").setup({
 			-- can configure highlights by doing something like vim.cmd.hi("Comment gui=none")
 		end,
 	},
+
+	-- flexoki
+	-- {
+	--   "kepano/flexoki-neovim",
+	--   name = "flexoki",
+	--   config = function ()
+	--     vim.cmd("colorscheme flexoki-dark")
+	--   end,
+	-- },
+
+	-- melange
+	-- {
+	--   "savq/melange-nvim",
+	--   config = function ()
+	--     vim.cmd("colorscheme melange")
+	--   end,
+	-- },
+
+	----------------------------------------------------------------------------------------
 
 	-- Highlight todo, notes, etc in comments
 	{
@@ -728,6 +764,14 @@ require("lazy").setup({
 					section_separators = "",
 					component_separators = "",
 					lualine_x = { "searchcount", "hostname", "encoding", "fileformat", "filetype" },
+					sections = {
+						lualine_c = {
+							{
+								"filename",
+								path = 3,
+							},
+						},
+					},
 				},
 			})
 		end,
@@ -777,6 +821,19 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {},
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xt",
+				"<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME,BUG}}<cr>",
+				desc = "Todos (Trouble)",
+			},
+		},
 	},
 
 	{ -- Highlight, edit, and navigate code
