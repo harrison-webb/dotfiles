@@ -63,7 +63,7 @@ vim.opt.splitbelow = true
 vim.opt.inccommand = "split"
 
 -- Show which line your cursor is on
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 vim.opt.cursorlineopt = "line"
 
 -- Minimal number of screen lines to keep above and below the cursor.
@@ -685,40 +685,40 @@ if err != nil {
 
 	-- THEME/COLORSCHEMES ------------------------------------------------------------------
 	-- kanagawa
-	{
-		-- `:Telescope colorscheme` to list all preinstalled colorschemes
-		"rebelot/kanagawa.nvim",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
-		config = function()
-			require("kanagawa").setup({
-				compile = true,
-				keywordStyle = { italic = false },
-				typeStyle = { bold = true },
-			})
-			-- Load the colorscheme here
-			vim.cmd("colorscheme kanagawa")
-
-			-- can configure highlights by doing something like vim.cmd.hi("Comment gui=none")
-		end,
-	},
+	-- {
+	-- 	-- `:Telescope colorscheme` to list all preinstalled colorschemes
+	-- 	"rebelot/kanagawa.nvim",
+	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	config = function()
+	-- 		require("kanagawa").setup({
+	-- 			compile = true,
+	-- 			keywordStyle = { italic = false },
+	-- 			typeStyle = { bold = true },
+	-- 		})
+	-- 		-- Load the colorscheme here
+	-- 		vim.cmd("colorscheme kanagawa")
+	--
+	-- 		-- can configure highlights by doing something like vim.cmd.hi("Comment gui=none")
+	-- 	end,
+	-- },
 
 	-- flexoki
 	-- {
-	--   "kepano/flexoki-neovim",
-	--   name = "flexoki",
-	--   config = function ()
-	--     vim.cmd("colorscheme flexoki-dark")
-	--   end,
+	-- 	"kepano/flexoki-neovim",
+	-- 	name = "flexoki",
+	-- 	config = function()
+	-- 		vim.cmd("colorscheme flexoki-dark")
+	-- 	end,
 	-- },
 
 	-- melange
-	-- {
-	--   "savq/melange-nvim",
-	--   config = function ()
-	--     vim.cmd("colorscheme melange")
-	--   end,
-	-- },
+	{
+		"savq/melange-nvim",
+		config = function()
+			vim.cmd("colorscheme melange")
+		end,
+	},
 
 	----------------------------------------------------------------------------------------
 
@@ -764,12 +764,12 @@ if err != nil {
 					section_separators = "",
 					component_separators = "",
 					lualine_x = { "searchcount", "hostname", "encoding", "fileformat", "filetype" },
-					sections = {
-						lualine_c = {
-							{
-								"filename",
-								path = 3,
-							},
+				},
+				sections = {
+					lualine_c = {
+						{
+							"filename",
+							path = 3,
 						},
 					},
 				},
