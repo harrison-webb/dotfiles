@@ -1,57 +1,94 @@
 {
-    "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[dockercompose]": {
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "breadcrumbs.enabled": false,
+  "chat.disableAIFeatures": true,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.accessibilitySupport": "off",
+  "editor.autoClosingOvertype": "always",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.cursorBlinking": "solid",
+  "editor.cursorSurroundingLines": 4,
+  "editor.fontSize": 12.5,
+  "editor.formatOnSave": true,
+  "editor.hover.delay": 500,
+  "editor.insertSpaces": true,
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+  "editor.quickSuggestionsDelay": 500,
+  "editor.renderWhitespace": "selection",
+  "editor.stickyScroll.enabled": false,
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 150,
+  "extensions.ignoreRecommendations": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 10000,
+  "go.toolsManagement.autoUpdate": true,
+  "go.diagnostic.vulncheck": "Imports",
+  "html.completion.attributeDefaultValue": "empty",
+  "javascript.suggest.completeFunctionCalls": true,
+  "redhat.telemetry.enabled": false,
+  "telemetry.feedback.enabled": false,
+  "typescript.suggest.completeFunctionCalls": true,
+  // vim keybinds
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "after": [
+        "g",
+        "j"
+      ],
+      "before": [
+        "j"
+      ]
     },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    {
+      "after": [
+        "g",
+        "k"
+      ],
+      "before": [
+        "k"
+      ]
     },
-    "[jsonc]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[python]": {
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
-        },
-        "editor.defaultFormatter": "ms-python.black-formatter",
-        "editor.formatOnSave": true
-    },
-    "isort.args": [
-        "--profile",
-        "black"
-    ],
-    "accessibility.signals.noInlayHints": {
-        "announcement": "off"
-    },
-    "breadcrumbs.enabled": false,
-    "catppuccin.italicKeywords": false,
-    "debug.allowBreakpointsEverywhere": true,
-    "debug.inlineValues": "on",
-    "editor.accessibilitySupport": "off",
-    "editor.cursorSurroundingLines": 3,
-    "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontSize": 14,
-    "editor.formatOnSave": true,
-    "editor.inlayHints.enabled": "onUnlessPressed",
-    "editor.inlineSuggest.showToolbar": "always",
-    "editor.minimap.enabled": false,
-    "editor.screenReaderAnnounceInlineSuggestion": false,
-    "editor.scrollbar.verticalScrollbarSize": 24,
-    "editor.suggest.showSnippets": true,
-    "git.openRepositoryInParentFolders": "never",
-    "python.analysis.typeCheckingMode": "basic",
-    "reactSnippets.settings.importReactOnTop": false,
-    "terminal.integrated.enableMultiLinePasteWarning": "never",
-    "window.commandCenter": true,
-    "window.title": "${activeEditorLong}${separator}${dirty}",
-    "window.titleBarStyle": "custom",
-    "workbench.colorTheme": "Kanagawa",
-    "editor.cursorBlinking": "solid",
-    "window.confirmBeforeClose": "always",
-    "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
-    },
-    "workbench.colorCustomizations": {
-        "editorCursor.background": "#363646",
-    },
-    "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim-code/"
+  ],
+  "vim.useSystemClipboard": true,
+  "vim.highlightedyank.enable": true,
+  "window.title": "${activeEditorLong}${separator}${dirty}",
+  "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "Ghostty Dark",
+  "workbench.editor.enablePreview": true,
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 5,
+  "workbench.editor.limit.perEditorGroup": true,
+  "workbench.editor.limit.excludeDirty": true,
+  "workbench.editor.openPositioning": "last",
+  "workbench.editor.showTabs": "multiple",
+  "workbench.iconTheme": "vs-minimal",
+  "workbench.statusBar.visible": true,
+  "[python]": {
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.defaultColorDecorators": "never",
+    "editor.formatOnType": true,
+    "editor.wordBasedSuggestions": "off"
+  }
+  // "gopls": {
+  //   "ui.completion.usePlaceholders": false,
+  //   "ui.completion.completeFunctionCalls": true,
+  // },
+  // "editor.snippetSuggestions": "none",
 }
